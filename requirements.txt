@@ -1,0 +1,5 @@
+echo "python-telegram-bot==20.6" > requirements.txt
+echo "requests==2.31.0" >> requirements.txt
+echo "aiosqlite==0.19.0" >> requirements.txt
+echo "python-dotenv==1.0.0" >> requirements.txt
+echo "aiohttp==3.9.0" >> requirements.txt
