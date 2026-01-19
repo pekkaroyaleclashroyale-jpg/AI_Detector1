@@ -9,7 +9,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
+from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 
 # Загрузка переменных окружения
 load_dotenv()
@@ -163,7 +163,7 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 if ai_prob > 50:
                     verdict = "🤖 СКОРЕЕ ВСЕГО ИИ"
                 else:
-                    verdict = "👤 СКОРЕЕ ВСЕГО ЧЕЛОВЕК"
+                    verdict = "👤 СКОРЕЕ ВСЕГО НАСТОЯЩЕЕ"
                 
                 result_text = (
                     f"📊 Результат анализа:\n"
@@ -236,10 +236,11 @@ async def handle_text_message(update: Update, context: ContextTypes.DEFAULT_TYPE
 # --- ЗАПУСК БОТА ---
 async def post_init(application):
     await init_db()
-    logger.info("✅ Bot initialized")
+    logger.info("✅ Database initialized")
 
 def main():
-    app = ApplicationBuilder().token(TOKEN).post_init(post_init).build()
+    # Исправленная строка: Application.builder() вместо ApplicationBuilder()
+    app = Application.builder().token(TOKEN).post_init(post_init).build()
     
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("profile", show_profile))
